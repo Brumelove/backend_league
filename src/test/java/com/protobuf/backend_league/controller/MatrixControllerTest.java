@@ -1,13 +1,9 @@
 package com.protobuf.backend_league.controller;
 
 import com.protobuf.backend_league.service.MatrixFunctionService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -33,7 +29,7 @@ class MatrixControllerTest {
     @Test
     void testHandleCsv_EchoAction() throws Exception {
         MockMultipartFile file = getMockMultipartFile("1,2\n3,4");
-        when(matrixFunctionService.handleCsv(eq("echo"), any())).thenReturn("1,2\n3,4");
+        when(matrixFunctionService.handleMatriAction(eq("echo"), any())).thenReturn("1,2\n3,4");
 
         mockMvc.perform(multipart("/echo")
                         .file(file)
@@ -45,7 +41,7 @@ class MatrixControllerTest {
     @Test
     void testHandleCsv_InvertAction() throws Exception {
         MockMultipartFile file = getMockMultipartFile("1,2\n3,4");
-       when(matrixFunctionService.handleCsv(eq("invert"), any())).thenReturn("1,3\n2,4");
+       when(matrixFunctionService.handleMatriAction(eq("invert"), any())).thenReturn("1,3\n2,4");
 
         mockMvc.perform(multipart("/invert")
                         .file(file)

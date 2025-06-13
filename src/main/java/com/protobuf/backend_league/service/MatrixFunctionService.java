@@ -64,7 +64,7 @@ public class MatrixFunctionService {
         return result;
     }
 
-    public String handleCsv(String operation, MultipartFile file) {
+    public String handleMatriAction(String operation, MultipartFile file) {
 
         try {
             int[][] matrix = parseCsvService.readAndValidateMatrix(file);

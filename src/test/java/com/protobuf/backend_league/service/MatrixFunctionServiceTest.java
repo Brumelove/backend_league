@@ -113,7 +113,7 @@ class MatrixFunctionServiceTest extends AbstractJunitMockitoRunner {
     }
 
     @Test
-    void testHandleCsv_ValidOperation() throws Exception {
+    void testHandleMatriAction_ValidOperation() throws Exception {
         String csv = "1,2\n3,4";
         MockMultipartFile file = getMockMultipartFile(csv);
 
@@ -121,34 +121,34 @@ class MatrixFunctionServiceTest extends AbstractJunitMockitoRunner {
         when(parseCsvService.readAndValidateMatrix(file)).thenReturn(matrix);
         when(parseCsvService.convertArrayToString(matrix)).thenReturn("1,2\n3,4");
 
-        assertEquals("1,2\n3,4", matrixFunctionService.handleCsv("echo", file));
-        assertEquals("1,2,3,4", matrixFunctionService.handleCsv("flatten", file));
-        assertEquals("10", matrixFunctionService.handleCsv("sum", file));
-        assertEquals("24", matrixFunctionService.handleCsv("multiply", file));
+        assertEquals("1,2\n3,4", matrixFunctionService.handleMatriAction("echo", file));
+        assertEquals("1,2,3,4", matrixFunctionService.handleMatriAction("flatten", file));
+        assertEquals("10", matrixFunctionService.handleMatriAction("sum", file));
+        assertEquals("24", matrixFunctionService.handleMatriAction("multiply", file));
 
         when(parseCsvService.convertArrayToString(any(int[][].class))).thenReturn("1,3\n2,4");
-        assertEquals("1,3\n2,4", matrixFunctionService.handleCsv("invert", file));
+        assertEquals("1,3\n2,4", matrixFunctionService.handleMatriAction("invert", file));
 
     }
 
     @Test
-    void testHandleCsv_InvalidOperation() throws Exception {
+    void testHandleMatriAction_InvalidOperation() throws Exception {
         MockMultipartFile file = getMockMultipartFile("1,2\n3,4");
         int[][] matrix = {{1, 2}, {3, 4}};
         when(parseCsvService.readAndValidateMatrix(file)).thenReturn(matrix);
 
         Exception ex = assertThrows(RuntimeException.class, () -> matrixFunctionService
-                .handleCsv("unknown", file));
+                .handleMatriAction("unknown", file));
         assertTrue(ex.getMessage().contains("Unexpected value"));
     }
 
     @Test
-    void testHandleCsv_ParseCsvThrows() throws Exception {
+    void testHandleCsv_ParseMatrixFunctionThrows() throws Exception {
         MockMultipartFile file = getMockMultipartFile("parse");
         when(parseCsvService.readAndValidateMatrix(file)).thenThrow(new RuntimeException("parse error"));
 
         Exception ex = assertThrows(RuntimeException.class, () -> matrixFunctionService
-                .handleCsv("echo", file));
+                .handleMatriAction("echo", file));
         assertTrue(ex.getMessage().contains("Error processing CSV file"));
     }
 }

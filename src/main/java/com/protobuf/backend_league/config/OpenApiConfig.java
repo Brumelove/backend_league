@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
                         url = "https://www.league.com/en"
                 ),
                 description = "rest apis for league",
-                title = "Gold dc",
+                title = "League",
                 version = "1.0",
                 license = @License(
                         name = "Apache 2.0",
